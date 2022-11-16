@@ -7,4 +7,8 @@ public class CreditLoan {
     public long loanPeriod(LocalDate startDate, LocalDate endDate) {
         return startDate.until(endDate, ChronoUnit.DAYS);
     }
+
+    public long calcInterestPerDay(long loan, double interestRate) {
+        return Math.round((loan * interestRate / 100) /365);
+    }
 }

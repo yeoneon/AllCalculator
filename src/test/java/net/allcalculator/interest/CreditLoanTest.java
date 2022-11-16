@@ -13,7 +13,13 @@ public class CreditLoanTest {
 
     @BeforeEach
     void init() {
-        creditLoanUser = new CreditLoanUser(LocalDate.of(2022, 1, 31),LocalDate.of(2023, 1, 31));
+        creditLoanUser = CreditLoanUser.builder()
+                .startDate(LocalDate.of(2022, 1, 31))
+                .endDate(LocalDate.of(2023, 1, 31))
+                .loan(20000000)
+                .interestRate(5.68)
+                .build();
+
         creditLoan = new CreditLoan();
     }
 
@@ -31,5 +37,11 @@ public class CreditLoanTest {
         //종료일이 시작일 이전
         creditLoanUser.setEndDate(LocalDate.of(2022, 1, 30));
         assertThat(creditLoanUser.isEnddateAfterStartdate()).isEqualTo(false);
+    }
+
+    @Test
+    void 하루당이자() {
+        long interestOfOneDay = creditLoan.calcInterestPerDay(creditLoanUser.loan,creditLoanUser.interestRate);
+        assertThat(interestOfOneDay).isEqualTo(3112);
     }
 }
