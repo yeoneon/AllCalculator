@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,7 +26,7 @@ public class CreditLoanTest {
 
     @Test
     void 대출기간총일수() {
-        long totalDays = creditLoan.loanPeriod(creditLoanUser.startDate, creditLoanUser.endDate);
+        long totalDays = creditLoan.loanPeriod(creditLoanUser.getStartDate(), creditLoanUser.getEndDate());
         assertThat(totalDays).isEqualTo(365);
     }
 
@@ -41,7 +42,13 @@ public class CreditLoanTest {
 
     @Test
     void 하루당이자() {
-        long interestOfOneDay = creditLoan.calcInterestPerDay(creditLoanUser.loan,creditLoanUser.interestRate);
+        long interestOfOneDay = creditLoan.calcInterestPerDay(creditLoanUser.getLoan(),creditLoanUser.getInterestRate());
         assertThat(interestOfOneDay).isEqualTo(3112);
+    }
+
+    @Test
+    void 대출상환일까지모든날짜() {
+        List<LocalDate>byTheRedemptionDateList = creditLoan.getByTheRedemptionDateList(creditLoanUser.getStartDate(), creditLoanUser.getEndDate());
+
     }
 }
